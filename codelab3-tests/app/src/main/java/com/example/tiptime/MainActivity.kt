@@ -55,7 +55,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.tiptime.ui.theme.TipTimeTheme
-import org.jetbrains.annotations.VisibleForTesting
+import androidx.annotation.VisibleForTesting
 import java.text.NumberFormat
 
 class MainActivity : ComponentActivity() {
