@@ -1,5 +1,6 @@
 package com.example.artspace
 
+import android.content.res.Configuration
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -26,6 +27,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -71,32 +73,70 @@ fun ArtSpaceApp(modifier: Modifier = Modifier) {
         2 -> R.string.art_2_year
         else -> R.string.art_3_year
     }
-    Column(
-        modifier = modifier
-            .fillMaxSize()
-            .safeContentPadding()
-            .padding(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.SpaceBetween
-    ) {
-        ArtworkWall(
-            imageRes = imageRes,
-            titleRes = titleRes,
-            modifier = Modifier.weight(1f)
-        )
-        ArtworkDescriptor(
-            titleRes = titleRes,
-            artistRes = artistRes,
-            yearRes = yearRes
-        )
-        DisplayController(
-            onPreviousClick = {
-                currentArtwork = if (currentArtwork == 1) 3 else currentArtwork - 1
-            },
-            onNextClick = {
-                currentArtwork = if (currentArtwork == 3) 1 else currentArtwork + 1
+
+    val onPreviousClick = {
+        currentArtwork = if (currentArtwork == 1) 3 else currentArtwork - 1
+    }
+    val onNextClick = {
+        currentArtwork = if (currentArtwork == 3) 1 else currentArtwork + 1
+    }
+
+    val isLandscape =
+        LocalConfiguration.current.orientation == Configuration.ORIENTATION_LANDSCAPE
+
+    if (isLandscape) {
+        Row(
+            modifier = modifier
+                .fillMaxSize()
+                .safeContentPadding()
+                .padding(16.dp),
+            horizontalArrangement = Arrangement.spacedBy(16.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            ArtworkWall(
+                imageRes = imageRes,
+                titleRes = titleRes,
+                modifier = Modifier.weight(1f)
+            )
+            Column(
+                modifier = Modifier.weight(1f),
+                verticalArrangement = Arrangement.Center
+            ) {
+                ArtworkDescriptor(
+                    titleRes = titleRes,
+                    artistRes = artistRes,
+                    yearRes = yearRes
+                )
+                DisplayController(
+                    onPreviousClick = onPreviousClick,
+                    onNextClick = onNextClick
+                )
             }
-        )
+        }
+    } else {
+        Column(
+            modifier = modifier
+                .fillMaxSize()
+                .safeContentPadding()
+                .padding(16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.SpaceBetween
+        ) {
+            ArtworkWall(
+                imageRes = imageRes,
+                titleRes = titleRes,
+                modifier = Modifier.weight(1f)
+            )
+            ArtworkDescriptor(
+                titleRes = titleRes,
+                artistRes = artistRes,
+                yearRes = yearRes
+            )
+            DisplayController(
+                onPreviousClick = onPreviousClick,
+                onNextClick = onNextClick
+            )
+        }
     }
 }
 
