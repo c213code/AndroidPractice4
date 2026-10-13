@@ -89,7 +89,12 @@ fun ArtSpaceApp(modifier: Modifier = Modifier) {
             artistRes = artistRes,
             yearRes = yearRes
         )
-        DisplayController()
+        DisplayController(
+            onPreviousClick = { },
+            onNextClick = {
+                currentArtwork = if (currentArtwork == 3) 1 else currentArtwork + 1
+            }
+        )
     }
 }
 
@@ -140,15 +145,20 @@ fun ArtworkDescriptor(
 }
 
 @Composable
-fun DisplayController(modifier: Modifier = Modifier){
+fun DisplayController(
+    onPreviousClick: () -> Unit,
+    onNextClick: () -> Unit,
+    modifier: Modifier = Modifier
+
+){
     Row(
         modifier = modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        Button(onClick = { }) {
+        Button(onClick = onPreviousClick) {
             Text(text = stringResource(R.string.previous))
         }
-        Button(onClick = { }) {
+        Button(onClick = onNextClick) {
             Text(text = stringResource(R.string.next))
         }
     }
