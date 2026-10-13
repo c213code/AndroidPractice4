@@ -90,7 +90,9 @@ fun ArtSpaceApp(modifier: Modifier = Modifier) {
             yearRes = yearRes
         )
         DisplayController(
-            onPreviousClick = { },
+            onPreviousClick = {
+                currentArtwork = if (currentArtwork == 1) 3 else currentArtwork - 1
+            },
             onNextClick = {
                 currentArtwork = if (currentArtwork == 3) 1 else currentArtwork + 1
             }
