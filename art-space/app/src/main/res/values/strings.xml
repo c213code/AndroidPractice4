@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">Art Space</string>
+    <string name="previous">Previous</string>
+    <string name="next">Next</string>
+
+    <string name="art_1_title">SDU picture</string>
+    <string name="art_1_artist">Yerosh</string>
+    <string name="art_1_year">2024</string>
+
+    <string name="art_2_title">SITAM Faculty</string>
+    <string name="art_2_artist">Bakosh</string>
+    <string name="art_2_year">2023</string>
+
+    <string name="art_3_title">SDU Store</string>
+    <string name="art_3_artist">Tikow</string>
+    <string name="art_3_year">2026</string>
 </resources>
