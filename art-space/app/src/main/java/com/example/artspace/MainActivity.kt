@@ -4,6 +4,8 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -15,10 +17,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeContentPadding
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -26,7 +31,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.example.artspace.ui.theme.ArtSpaceTheme
 
 class MainActivity : ComponentActivity() {
@@ -45,6 +49,28 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun ArtSpaceApp(modifier: Modifier = Modifier) {
+    var currentArtwork by remember { mutableStateOf(1) }
+
+    val imageRes = when (currentArtwork) {
+        1 -> R.drawable.art_1
+        2 -> R.drawable.art_2
+        else -> R.drawable.art_3
+    }
+    val titleRes = when (currentArtwork) {
+        1 -> R.string.art_1_title
+        2 -> R.string.art_2_title
+        else -> R.string.art_3_title
+    }
+    val artistRes = when (currentArtwork) {
+        1 -> R.string.art_1_artist
+        2 -> R.string.art_2_artist
+        else -> R.string.art_3_artist
+    }
+    val yearRes = when (currentArtwork) {
+        1 -> R.string.art_1_year
+        2 -> R.string.art_2_year
+        else -> R.string.art_3_year
+    }
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -53,19 +79,31 @@ fun ArtSpaceApp(modifier: Modifier = Modifier) {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceBetween
     ) {
-        ArtworkWall(modifier = Modifier.weight(1f))
-        ArtworkDescriptor()
+        ArtworkWall(
+            imageRes = imageRes,
+            titleRes = titleRes,
+            modifier = Modifier.weight(1f)
+        )
+        ArtworkDescriptor(
+            titleRes = titleRes,
+            artistRes = artistRes,
+            yearRes = yearRes
+        )
         DisplayController()
     }
 }
 
 @Composable
-fun ArtworkWall(modifier: Modifier = Modifier) {
+fun ArtworkWall(
+    @DrawableRes imageRes: Int,
+    @StringRes titleRes: Int,
+    modifier: Modifier = Modifier
+) {
     Box(modifier = modifier, contentAlignment = Alignment.Center) {
         Surface(shadowElevation = 8.dp) {
             Image(
-                painter = painterResource(R.drawable.art_1),
-                contentDescription = stringResource(R.string.art_1_title),
+                painter = painterResource(imageRes),
+                contentDescription = stringResource(titleRes),
                 modifier = Modifier.padding(24.dp)
             )
         }
@@ -73,24 +111,29 @@ fun ArtworkWall(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun ArtworkDescriptor(modifier: Modifier = Modifier) {
+fun ArtworkDescriptor(
+    @StringRes titleRes: Int,
+    @StringRes artistRes: Int,
+    @StringRes yearRes: Int,
+    modifier: Modifier = Modifier
+) {
     Surface(
         modifier = modifier
             .fillMaxWidth()
             .padding(vertical = 16.dp),
         tonalElevation = 4.dp
-    ){
+    ) {
         Column(modifier = Modifier.padding(16.dp)) {
             Text(
-                text = stringResource(R.string.art_1_title),
-                fontWeight = FontWeight.Bold,
-                fontSize = 24.sp
+                text = stringResource(titleRes),
+                style = MaterialTheme.typography.headlineMedium
             )
             Row {
                 Text(
-                    text = stringResource(R.string.art_1_artist),
+                    text = stringResource(artistRes),
+                    fontWeight = FontWeight.Bold
                 )
-                Text(text = " (" + stringResource(R.string.art_1_year) + ")")
+                Text(text = " (" + stringResource(yearRes) + ")")
             }
         }
     }
