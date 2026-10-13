@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeContentPadding
+import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
@@ -54,6 +55,7 @@ fun ArtSpaceApp(modifier: Modifier = Modifier) {
     ) {
         ArtworkWall(modifier = Modifier.weight(1f))
         ArtworkDescriptor()
+        DisplayController()
     }
 }
 
@@ -90,6 +92,21 @@ fun ArtworkDescriptor(modifier: Modifier = Modifier) {
                 )
                 Text(text = " (" + stringResource(R.string.art_1_year) + ")")
             }
+        }
+    }
+}
+
+@Composable
+fun DisplayController(modifier: Modifier = Modifier){
+    Row(
+        modifier = modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        Button(onClick = { }) {
+            Text(text = stringResource(R.string.previous))
+        }
+        Button(onClick = { }) {
+            Text(text = stringResource(R.string.next))
         }
     }
 }
